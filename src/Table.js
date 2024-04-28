@@ -1,8 +1,10 @@
 import React from "react";
 import Row from "./Row";
+import { useState } from "react";
 
 export default function Table(){
-const transactions = [
+
+let transactions = [
     {
         date: "01/02/2002",
         description: "Debts",
@@ -28,8 +30,21 @@ const transactions = [
         amount: "$1000"
     }
 ]
+
+const [transactionn, setTransactionn] = useState(transactions)
+function handleChange(event){
+    const value = event.target.value.toLowerCase(); // Convert input value to lowercase
+    const filteredTransactions = transactions.filter((transaction) => {
+        return transaction.description.toLowerCase().includes(value);
+    });
+    setTransactionn(filteredTransactions);
+}
 return (
     <>
+    <div className="input-group mb-3 p-4">
+  <input onChange={handleChange} type="text" className="form-control" placeholder="Filter" aria-describedby="basic-addon2"/>
+ 
+</div>
     <table className="table table-secondary">
 <thead>
    <tr>
@@ -40,7 +55,7 @@ return (
    </tr>
 </thead>
 <tbody>
-    <Row transactions={transactions}/>
+    <Row transactions={transactionn}/>
 </tbody>
 </table>
     </>
